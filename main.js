@@ -4,10 +4,10 @@ app.whenReady().then(() => {
   let display = screen.getPrimaryDisplay();
   let width = display.bounds.width;
   win = new BrowserWindow({
-    width: 500,
-    x: width - 500,
-    y: 0,
-    height: 360,
+    width: 280,
+    x: width - 280 - 10,
+    y: 10,
+    height: 300,
     alwaysOnTop: true,
     frame: false,
     transparent: true,

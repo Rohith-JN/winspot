@@ -17,6 +17,7 @@ async function getCurrentlyPlayingTrack(accessToken) {
 
   if (response.status === 204 || response.status > 400) {
     console.log('No track is currently playing.');
+    console.log(response.status);
     return null;
   }
 
