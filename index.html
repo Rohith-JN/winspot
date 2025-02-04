@@ -10,13 +10,12 @@
 
 <body>
     <div class="container">
-        
         <main>
           <div class="player">
             <i class="fa fa-repeat"></i>
-            <i class="fa fa-fast-backward" id="playPause"></i>
-            <i class="fa fa-play"></i>
-            <i class="fa fa-fast-forward"></i>
+            <i class="fa fa-fast-backward" onclick="playPreviousTrack()"></i>
+            <i class="fa fa-play" onclick="playPauseTrack()"></i>
+            <i class="fa fa-fast-forward" onclick="playNextTrack()"></i>
             <i class="fa fa-random"></i>
           </div>
         </main>
@@ -25,6 +24,40 @@
           </div>
         </footer>
       </div>
-    <script src="script.js"></script>
+    <script>
+      async function playNextTrack() {
+        try {
+            const response = await fetch('http://localhost:3000/playNextTrack'); 
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+      }
+      async function playPreviousTrack() {
+        try {
+            const response = await fetch('http://localhost:3000/playPreviousTrack'); 
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+      }
+      async function playPauseTrack() {
+        try {
+            const response = await fetch('http://localhost:3000/playPauseTrack'); 
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+      }
+    </script>
 </body>
 </html>
