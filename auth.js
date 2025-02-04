@@ -31,7 +31,7 @@ app.get('/callback', async (req, res) => {
     }),
   });
   const tokenData = await tokenRes.json();
-  res.send(`Access Token: ${tokenData.access_token}. Save this token.`);
+  res.send(`Refresh Token: ${tokenData.refresh_token}`);
 });
 
 app.listen(PORT, () =>
