@@ -13,7 +13,13 @@ const app = express();
 const PORT = 3000;
 
 app.get('/playPauseTrack', async (req, res) => {
-  await togglePlayPause();
+  try {
+    const result = await togglePlayPause();
+    res.send({ message: result.message });
+  } catch (error) {
+    console.error('Error in togglePlayPause:', error);
+    res.status(500).send({ message: 'Internal server error' });
+  }
 });
 
 app.get('/playNextTrack', async (req, res) => {

@@ -3,7 +3,8 @@ import { app, BrowserWindow, screen } from 'electron';
 app.whenReady().then(() => {
   let display = screen.getPrimaryDisplay();
   let width = display.bounds.width;
-  win = new BrowserWindow({
+
+  let win = new BrowserWindow({
     width: 280,
     x: width - 280 - 10,
     y: 10,
@@ -12,5 +13,9 @@ app.whenReady().then(() => {
     frame: false,
     transparent: true,
     webPreferences: { nodeIntegration: true },
-  }).loadURL('D://Projects//TypeScript//spotify//index.html');
+  });
+
+  win
+    .loadURL('D://Projects//TypeScript//spotify//index.html')
+    .catch((err) => console.error('Failed to load URL:', err));
 });

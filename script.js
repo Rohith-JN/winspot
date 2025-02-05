@@ -3,6 +3,9 @@ import fetch from 'node-fetch';
 
 dotenv.config();
 
+let accessToken = '';
+let expiresAt = 0;
+
 export async function getCurrentlyPlayingTrack() {
   const access_token = await getAccessToken();
   const url = 'https://api.spotify.com/v1/me/player/currently-playing';
@@ -93,6 +96,7 @@ export async function playPreviousTrack() {
 
 export async function togglePlayPause() {
   const access_token = await getAccessToken();
+  let isError = false;
   const url = 'https://api.spotify.com/v1/me/player/play';
   const pauseUrl = 'https://api.spotify.com/v1/me/player/pause';
 
@@ -116,8 +120,10 @@ export async function togglePlayPause() {
 
       if (pauseResponse.status === 200) {
         console.log('⏸️ Music paused.');
+        isError = false;
       } else {
         console.error('⚠️ Error pausing music.');
+        isError = true;
       }
     } else {
       const playResponse = await fetch(url, {
@@ -130,23 +136,26 @@ export async function togglePlayPause() {
 
       if (playResponse.status === 200) {
         console.log('▶️ Music playing.');
+        isError = false;
       } else {
         console.error('⚠️ Error starting music.');
+        isError = true;
       }
     }
   } else {
     console.error('⚠️ Unable to retrieve player status.');
+    isError = true;
   }
+  return {
+    message: isError ? 'Error' : 'No Error',
+  };
 }
-let accessToken = '';
-let expiresAt = 0;
 
 async function getAccessToken() {
   const currentTime = Date.now();
   if (!accessToken || currentTime >= expiresAt) {
     console.log('Access token expired. Refreshing...');
     await getRefreshToken();
-    console.log(expiresAt);
   }
   return accessToken;
 }
