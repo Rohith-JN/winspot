@@ -5,6 +5,7 @@ import {
   playPreviousTrack,
   togglePlayPause,
   getCurrentlyPlayingTrack,
+  toggleShuffle,
 } from './script.js';
 
 dotenv.config();
@@ -18,6 +19,17 @@ app.get('/playPauseTrack', async (req, res) => {
     res.send({ message: result.message });
   } catch (error) {
     console.error('Error in togglePlayPause:', error);
+    res.status(500).send({ message: 'Internal server error' });
+  }
+});
+
+app.get('/shuffle', async (req, res) => {
+  const shuffle = req.query.state;
+  try {
+    const result = await toggleShuffle(shuffle);
+    res.send({ message: result.message });
+  } catch (error) {
+    console.error('Error in shuffle:', error);
     res.status(500).send({ message: 'Internal server error' });
   }
 });

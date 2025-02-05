@@ -181,6 +181,7 @@ async function getRefreshToken() {
 
     const data = await response.json();
     accessToken = data.access_token;
+
     expiresAt = Date.now() + data.expires_in * 1000;
     return accessToken;
   } catch (error) {
@@ -189,38 +190,27 @@ async function getRefreshToken() {
   }
 }
 
-// when initialising application run this initially
-async function makeDeviceActive() {
-  const access_token = getAccessToken();
+export async function toggleShuffle(shuffle) {
+  const access_token = await getAccessToken();
+  try {
+    const response = await fetch(
+      `https://api.spotify.com/v1/me/player/shuffle?state=${shuffle}`,
+      {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
-  const devicesResponse = await fetch(
-    'https://api.spotify.com/v1/me/player/devices',
-    {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
+    if (!response.ok) {
+      return `HTTP error! Status: ${response.status}`;
     }
-  );
-
-  const devicesData = await devicesResponse.json();
-  if (!devicesData.devices.length) {
-    console.log('No devices found. Open Spotify on any device.');
-    return;
+    console.log(`Set playback shuffle to ${shuffle}`);
+    return `Set playback shuffle to ${shuffle}`;
+  } catch (error) {
+    console.error('Error fetching refresh token:', error);
+    return `Error fetching refresh token:, ${error}`;
   }
-
-  const deviceId = devicesData.devices[0].id;
-
-  await fetch('https://api.spotify.com/v1/me/player', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${access_token}`,
-    },
-    body: JSON.stringify({
-      device_ids: [deviceId],
-      play: true,
-    }),
-  });
-
-  console.log('Device activated and playback started!');
 }
