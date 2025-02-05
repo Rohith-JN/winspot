@@ -25,6 +25,19 @@
         </footer>
       </div>
     <script>
+      document.addEventListener("DOMContentLoaded", function () {
+  const playPauseButton = document.querySelector(".fa-play");
+
+  playPauseButton.addEventListener("click", function () {
+    if (this.classList.contains("fa-play")) {
+      this.classList.remove("fa-play");
+      this.classList.add("fa-pause");
+    } else {
+      this.classList.remove("fa-pause");
+      this.classList.add("fa-play");
+    }
+  });
+});
       async function playNextTrack() {
         try {
             const response = await fetch('http://localhost:3000/playNextTrack'); 
