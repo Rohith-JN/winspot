@@ -3,8 +3,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 280px;
-    height: 300px;
+    width: 240px;
+    height: 220px;
     background: #111;
     box-shadow: 0 30px 20px -20px #000;
     box-sizing: border-box;
@@ -123,16 +123,4 @@
     top: 82%;
     left: 50%;
     transform: translateX(-50%);
-  }
-  footer {
-    clear: both;
-    padding: 1rem 2rem;
-    color: #999;
-    text-shadow: 2px 2px #111;
-    font-family: 'Roboto', sans-serif;
-    box-sizing: border-box;
-  }
-  footer .title {
-    text-align: center;
-    padding-bottom: 0.5rem;
   }

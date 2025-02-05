@@ -5,10 +5,10 @@ app.whenReady().then(() => {
   let width = display.bounds.width;
 
   let win = new BrowserWindow({
-    width: 280,
-    x: width - 280 - 10,
+    width: 240,
+    x: width - 240 - 10,
     y: 10,
-    height: 300,
+    height: 220,
     alwaysOnTop: true,
     frame: false,
     transparent: true,
