@@ -9,14 +9,14 @@
 </head>
 
 <body>
-    <div class="container">
-        <main>
+    <div class="container" style="-webkit-app-region: drag">
+        <main style>
           <div class="player">
-            <i class="fa fa-repeat"></i>
-            <i class="fa fa-fast-backward" onclick="playPreviousTrack()"></i>
-            <i class="fa fa-play" onclick="playPauseTrack()"></i>
-            <i class="fa fa-fast-forward" onclick="playNextTrack()"></i>
-            <i class="fa fa-random"></i>
+            <i class="fa fa-repeat" style="-webkit-app-region: no-drag;"></i>
+            <i class="fa fa-fast-backward" onclick="playPreviousTrack()" style="-webkit-app-region: no-drag;"></i>
+            <i class="fa fa-play" onclick="playPauseTrack()" style="-webkit-app-region: no-drag;"></i>
+            <i class="fa fa-fast-forward" onclick="playNextTrack()" style="-webkit-app-region: no-drag;"></i>
+            <i class="fa fa-random" style="-webkit-app-region: no-drag;"></i>
           </div>
         </main>
       </div>
