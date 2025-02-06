@@ -4,8 +4,9 @@ import {
   playNextTrack,
   playPreviousTrack,
   togglePlayPause,
-  getCurrentlyPlayingTrack,
   toggleShuffle,
+  toggleRepeat,
+  makeDeviceActive,
 } from './script.js';
 
 dotenv.config();
@@ -13,12 +14,43 @@ dotenv.config();
 const app = express();
 const PORT = 3000;
 
-app.get('/playPauseTrack', async (req, res) => {
+app.get('/playPauseTrack', async (_, res) => {
   try {
     const result = await togglePlayPause();
     res.send({ message: result.message });
   } catch (error) {
-    console.error('Error in togglePlayPause:', error);
+    console.error(error);
+    res.status(500).send({ message: 'Internal server error' });
+  }
+});
+
+app.get('/playNextTrack', async (_, res) => {
+  try {
+    const result = await playNextTrack();
+    res.send({ message: result.message });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Internal server error' });
+  }
+});
+
+app.get('/playPreviousTrack', async (_, res) => {
+  try {
+    const result = await playPreviousTrack();
+    res.send({ message: result.message });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Internal server error' });
+  }
+});
+
+app.get('/repeat', async (req, res) => {
+  const repeat = req.query.state;
+  try {
+    const result = await toggleRepeat(repeat);
+    res.send({ message: result.message });
+  } catch (error) {
+    console.error(error);
     res.status(500).send({ message: 'Internal server error' });
   }
 });
@@ -29,28 +61,12 @@ app.get('/shuffle', async (req, res) => {
     const result = await toggleShuffle(shuffle);
     res.send({ message: result.message });
   } catch (error) {
-    console.error('Error in shuffle:', error);
+    console.error(error);
     res.status(500).send({ message: 'Internal server error' });
   }
 });
 
-app.get('/playNextTrack', async (req, res) => {
-  await playNextTrack();
+app.listen(PORT, () => {
+  console.log(`Server running on port 3000`);
+  makeDeviceActive();
 });
-
-app.get('/playPreviousTrack', async (req, res) => {
-  await playPreviousTrack();
-});
-
-app.get('/getCurrentlyPlayingTrack', async (req, res) => {
-  await getCurrentlyPlayingTrack().then((track) => {
-    if (track) {
-      res.send({
-        track: track.name,
-        artist: track.artist,
-      });
-    }
-  });
-});
-
-app.listen(PORT, () => console.log(`Server running on port 3000`));

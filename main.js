@@ -13,6 +13,7 @@ app.whenReady().then(() => {
     frame: false,
     transparent: true,
     webPreferences: { nodeIntegration: true },
+    skipTaskbar: true,
   });
 
   win

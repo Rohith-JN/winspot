@@ -22,73 +22,114 @@
       </div>
     <script>
       
-  const playPauseButton = document.querySelector(".fa-play");
-  const shuffleButton = document.querySelector(".fa-random");
+    const playPauseButton = document.querySelector(".fa-play");
+    const shuffleButton = document.querySelector(".fa-random");
+    const repeatButton = document.querySelector(".fa-repeat");
 
-  playPauseButton.addEventListener("click", function () {
-    if (this.classList.contains("fa-play")) {
-      this.classList.remove("fa-play");
-      this.classList.add("fa-pause");
-    } else {
-      this.classList.remove("fa-pause");
-      this.classList.add("fa-play");
+    let isShuffle = false; 
+    let isRepeat = false;
+    let state = "";
+
+    
+    playPauseButton.addEventListener("click", function () {
+      if (this.classList.contains("fa-play")) {
+        this.classList.remove("fa-play");
+        this.classList.add("fa-pause");
+      } else {
+        this.classList.remove("fa-pause");
+        this.classList.add("fa-play");
+      }
+    });
+
+    repeatButton.addEventListener("click", async function() {
+      isRepeat = !isRepeat; 
+      if (isRepeat) {
+        state = "track";
+        repeatButton.style.color = 'cyan'; 
+      } else {
+        state = "off";
+        repeatButton.style.color = ''; 
+      }
+      await repeat(state);
+    });
+
+    shuffleButton.addEventListener("click", async function() {
+      isShuffle = !isShuffle; 
+      if (isShuffle) {
+        shuffleButton.style.color = 'cyan'; 
+      } else {
+        shuffleButton.style.color = ''; 
+      }
+      await shuffle(isShuffle);
+    });
+    
+    async function playPauseTrack() {
+      try {
+          const response = await fetch('http://localhost:3000/playPauseTrack'); 
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json();
+      } catch (error) {
+          console.error('Error fetching data:', error);
+      }
     }
-  });
-  let isShuffleOn = false; 
+  
+    async function playNextTrack() {
+      try {
+          const response = await fetch('http://localhost:3000/playNextTrack'); 
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          if (playPauseButton.classList.contains('fa-play')) {
+            playPauseButton.classList.remove('fa-play')
+            playPauseButton.classList.add('fa-pause');
+          }
 
-  shuffleButton.addEventListener("click", async function() {
-        isShuffleOn = !isShuffleOn; 
-        if (isShuffleOn) {
-          shuffleButton.style.color = 'cyan'; 
-        } else {
-          shuffleButton.style.color = ''; 
-        }
-        await shuffle(isShuffleOn);
-      });
-  async function shuffle(isShuffleOn) {
-        try {
-            const response = await fetch(`http://localhost:3000/shuffle?state=${isShuffleOn}`); 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            const data = await response.json();
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+          const data = await response.json();
+          
+      } catch (error) {
+          console.error('Error fetching data:', error);
       }
-      async function playNextTrack() {
-        try {
-            const response = await fetch('http://localhost:3000/playNextTrack'); 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            const data = await response.json();
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+    }
+    async function playPreviousTrack() {
+      try {
+          const response = await fetch('http://localhost:3000/playPreviousTrack'); 
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          if (playPauseButton.classList.contains('fa-play')) {
+            playPauseButton.classList.remove('fa-play')
+            playPauseButton.classList.add('fa-pause');
+          }
+          const data = await response.json();
+      } catch (error) {
+          console.error('Error fetching data:', error);
       }
-      async function playPreviousTrack() {
-        try {
-            const response = await fetch('http://localhost:3000/playPreviousTrack'); 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            const data = await response.json();
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+    }
+    
+    async function repeat(state) {
+      try {
+          const response = await fetch(`http://localhost:3000/repeat?state=${state}`); 
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json();
+      } catch (error) {
+          console.error('Error fetching data:', error);
       }
-      async function playPauseTrack() {
-        try {
-            const response = await fetch('http://localhost:3000/playPauseTrack'); 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            const data = await response.json();
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+    }
+    async function shuffle(isShuffleOn) {
+      try {
+          const response = await fetch(`http://localhost:3000/shuffle?state=${isShuffleOn}`); 
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json();
+      } catch (error) {
+          console.error('Error fetching data:', error);
       }
+    }
     </script>
 </body>
 </html>

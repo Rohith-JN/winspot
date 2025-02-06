@@ -1,2 +1,4 @@
 .env
 node_modules
+winspot.ps1
+winspot.bat
