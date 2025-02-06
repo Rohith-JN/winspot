@@ -7,4 +7,4 @@ winspot is a lightweight, always-on-screen Spotify mini-player designed for seam
 3) Spotify Integration: Uses the Spotify API for real-time track updates and controls.
 
 ### Preview
-<img src = "https://github.com/user-attachments/assets/771523f5-4999-403e-ac5c-eb6064b86d67" width=auto height=300 style="border-radius: 10px">
+![Screenshot (457)](https://github.com/user-attachments/assets/e2f01050-d95e-494d-b3da-8ae4a5bcda23)
