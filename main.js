@@ -1,4 +1,7 @@
 import { app, BrowserWindow, screen } from 'electron';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 app.whenReady().then(() => {
   let display = screen.getPrimaryDisplay();
@@ -17,6 +20,6 @@ app.whenReady().then(() => {
   });
 
   win
-    .loadURL('D://Projects//TypeScript//spotify//index.html')
+    .loadURL(process.env.URL)
     .catch((err) => console.error('Failed to load URL:', err));
 });
