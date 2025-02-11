@@ -5,8 +5,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const PORT = 8888;
-const REDIRECT_URI = process.env.SPOTIFY_REDIRECT_URI;
+const PORT = 3000;
+const REDIRECT_URI = process.env.REDIRECT_URI;
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 
